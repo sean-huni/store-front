@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatDividerModule, MatTabsModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatDividerModule, MatInputModule, MatTabsModule} from '@angular/material';
 
 import {HttpClientModule} from '@angular/common/http';
 import 'hammerjs';
@@ -18,6 +18,9 @@ import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav/top-bar/nav-bar.component';
 import { AccountComponent } from './components/account/account.component';
 import { FooterComponent } from './components/nav/footer/footer.component';
+import {MessageService} from './services/message/message.service';
+import { DialogUserComponent } from './components/dialog-user/dialog-user.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 @NgModule({
@@ -26,7 +29,9 @@ import { FooterComponent } from './components/nav/footer/footer.component';
     HomeComponent,
     NavBarComponent,
     AccountComponent,
-    FooterComponent
+    FooterComponent,
+    DialogUserComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -37,12 +42,15 @@ import { FooterComponent } from './components/nav/footer/footer.component';
     MatTabsModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [
     LoginService,
     UserService,
-    BookService
+    BookService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

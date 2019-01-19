@@ -6,7 +6,6 @@ export class User {
   private _email: string;
   private _enabled: boolean;
 
-
   get id(): number {
     return this._id;
   }
