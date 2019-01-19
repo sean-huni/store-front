@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Action} from '../../model/chat/action';
 import {UserInt} from '../../model/chat/user-int';
-import {Message} from '../../model/chat/message-int';
+import {MessageInt} from '../../model/chat/message-int';
 import {MatDialog, MatDialogRef, MatList, MatListItem} from '@angular/material';
+
 import {DialogUserComponent} from '../dialog-user/dialog-user.component';
 import {DialogUserType} from '../../model/chat/dialog-user-type';
 import {MessageService} from '../../services/message/message.service';
 import {Event} from '../../model/chat/event';
-import {UserChat} from '../../model/user-chat';
 
 const AVATAR_URL = 'http://icons.iconarchive.com/icons/papirus-team/papirus-status/96/avatar-default-icon.png';
 
@@ -18,8 +18,8 @@ const AVATAR_URL = 'http://icons.iconarchive.com/icons/papirus-team/papirus-stat
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   action = Action;
-  user: UserChat;
-  messages: Message[] = [];
+  user: UserInt;
+  messages: MessageInt[] = [];
   messageContent: string;
   ioConnection: any;
   dialogRef: MatDialogRef<DialogUserComponent> | null;
@@ -77,7 +77,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.socketService.initSocket();
 
     this.ioConnection = this.socketService.onMessage()
-      .subscribe((message: Message) => {
+      .subscribe((message: MessageInt) => {
         this.messages.push(message);
       });
 
@@ -137,7 +137,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   public sendNotification(params: any, action: Action): void {
-    let message: Message;
+    let message: MessageInt;
 
     if (action === Action.JOINED) {
       message = {

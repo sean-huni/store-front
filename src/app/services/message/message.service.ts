@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 
 import * as socketIo from 'socket.io-client';
 import {AppConst} from '../../constants/app-const';
-import {Message} from '../../model/chat';
 import {Observable} from 'rxjs';
+import {Event} from '../../model/chat/event';
+import {MessageInt} from '../../model/chat/message-int';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +13,20 @@ export class MessageService {
   private socket;
 
   constructor() {
-    this.socket = socketIo(AppConst.serverPath);
   }
 
   public initSocket(): void {
     // Demo Socket Here...
+    this.socket = socketIo(AppConst.serverPath);
   }
 
-  public send(message: Message): void {
+  public send(message: MessageInt): void {
     this.socket.emit('message', message);
   }
 
-  public onMessage(): Observable<Message> {
-    return new Observable<Message>(observer => {
-      this.socket.on('message', (data: Message) => observer.next(data));
+  public onMessage(): Observable<MessageInt> {
+    return new Observable<MessageInt>(observer => {
+      this.socket.on('message', (data: MessageInt) => observer.next(data));
     });
   }
 

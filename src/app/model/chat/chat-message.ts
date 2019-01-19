@@ -1,7 +1,8 @@
-import {Message, User} from '.';
+import {Message} from '.';
+import {UserChat} from './impl/user-chat';
 
 export class ChatMessage extends Message {
-  constructor(from: User, content: string) {
+  constructor(from: UserChat, content: string) {
     super(from, content);
   }
 }

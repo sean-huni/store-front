@@ -19,7 +19,6 @@ export class DialogUserComponent implements OnInit {
   ngOnInit() {
   }
 
-
   public onSave(): void {
     this.dialogRef.close({
       username: this.params.username,

@@ -1,9 +1,9 @@
 import {Action} from './action';
-import {UserChat} from '../user-chat';
+import {UserChat} from './impl/user-chat';
 
 export interface UserInt {
-  from?: UserChat;
-  content?: any;
-  action?: Action;
+  id?: number;
+  name?: string;
+  avatar?: string;
 
 }

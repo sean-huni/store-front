@@ -3,9 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatDividerModule, MatInputModule, MatTabsModule} from '@angular/material';
+import {
+  MatButtonModule, MatCardModule,
+  MatCheckboxModule,
+  MatDividerModule, MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatTabsModule
+} from '@angular/material';
+
+import {MatDialogModule, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 import {HttpClientModule} from '@angular/common/http';
 import 'hammerjs';
@@ -38,13 +47,20 @@ import { ChatComponent } from './components/chat/chat.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatDialogModule,
+    MatFormFieldModule,
     FormsModule,
     MatTabsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
     MatInputModule,
-    MatDialogModule
+    MatDialog,
+    MatDialogRef,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatListModule,
+    MatCardModule
   ],
   providers: [
     LoginService,
@@ -52,6 +68,7 @@ import { ChatComponent } from './components/chat/chat.component';
     BookService,
     MessageService
   ],
+  entryComponents: [DialogUserComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
