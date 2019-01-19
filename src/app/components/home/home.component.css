@@ -1,0 +1,33 @@
+.img-logo-right {
+  width: 300px !important;
+  z-index: 1;
+  float: right !important;
+  margin-top: 40px;
+  border-radius: 15px !important;
+}
+
+.img-wood-banner {
+  position: absolute;
+  margin-top: 90px;
+  z-index: -2;
+}
+
+.img-hr {
+  position: absolute;
+  width: 85%;
+  height: 6px;
+  background-color: #333333;
+  z-index: -1;
+  margin-top: -170px;
+}
+
+.card-theme {
+  background-color: #333333
+}
+
+.card-h3{
+  font-family: "Apple Color Emoji", cursive;
+  font-weight: lighter;
+  font-style: italic;
+  color: #bb6bca;
+}
