@@ -76,23 +76,37 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   private initIoConnection(): void {
     this.socketService.initSocket();
-    this.ioConnection = this.socketService.onMessage()
-      .subscribe((message: Message) => {
-        console.log('Debug Message: ', message);
-        this.messages.push(message);
-        console.log('Debug Messages: ', this.messages);
-      });
+    setTimeout(() => {
+      console.log('isConnected-1: ', this.socketService.isConnected);
+      this.waitedConnection();
+    }, 1500);
 
+  }
 
-    this.socketService.onEvent(Event.CONNECT)
-      .subscribe(() => {
-        console.log('connected');
-      });
+  private waitedConnection(): void {
+    console.log('isConnected-2: ', this.socketService.isConnected);
+    if (this.socketService.isConnected) {
+      console.log('Executed...');
+      this.ioConnection = this.socketService.onMessage()
+        .subscribe((message: Message) => {
+          console.log('Pushed Message: ', message);
+          message = JSON.parse((message).toString().split(/\r?\n/).pop());
+          console.log('Extracted Message: ', message);
+          // console.log('Parsed Message: ', JSON.parse(message).from);
+          this.messages.push(Object.assign({}, message));
+          console.log('All Messages: ', this.messages);
+        });
 
-    this.socketService.onEvent(Event.DISCONNECT)
-      .subscribe(() => {
-        console.log('disconnected');
-      });
+      this.socketService.onEvent(Event.CONNECT)
+        .subscribe(() => {
+          console.log('connected');
+        });
+
+      this.socketService.onEvent(Event.DISCONNECT)
+        .subscribe(() => {
+          console.log('disconnected');
+        });
+    }
   }
 
   private getRandomId(): number {
@@ -119,9 +133,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
       this.user.name = paramsDialog.username;
       if (paramsDialog.dialogType === DialogUserType.NEW) {
         this.initIoConnection();
-        this.sendNotification(paramsDialog, Action.JOINED);
+        setTimeout(() => {
+          this.sendNotification(paramsDialog, Action.JOINED);
+        }, 2000);
       } else if (paramsDialog.dialogType === DialogUserType.EDIT) {
-        this.sendNotification(paramsDialog, Action.RENAME);
+        setTimeout(() => {
+          this.sendNotification(paramsDialog, Action.RENAME);
+        }, 2000);
       }
     });
   }
