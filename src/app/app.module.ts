@@ -8,13 +8,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCardModule,
   MatCheckboxModule,
-  MatDividerModule, MatFormFieldModule,
-  MatIconModule,
-  MatInputModule, MatListModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatIconModule, MatInputModule, MatListModule,
   MatTabsModule
 } from '@angular/material';
-
-import {MatDialogModule, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 import {HttpClientModule} from '@angular/common/http';
 import 'hammerjs';
@@ -27,9 +26,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav/top-bar/nav-bar.component';
 import { AccountComponent } from './components/account/account.component';
 import { FooterComponent } from './components/nav/footer/footer.component';
-import {MessageService} from './services/message/message.service';
-import { DialogUserComponent } from './components/dialog-user/dialog-user.component';
-import { ChatComponent } from './components/chat/chat.component';
+import { ChatComponent } from './components/live/chat/chat.component';
+import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.component';
 
 
 @NgModule({
@@ -39,36 +37,33 @@ import { ChatComponent } from './components/chat/chat.component';
     NavBarComponent,
     AccountComponent,
     FooterComponent,
-    DialogUserComponent,
-    ChatComponent
+    ChatComponent,
+    ChatDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatDialogModule,
-    MatFormFieldModule,
     FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatListModule,
     MatTabsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatInputModule,
-    MatDialog,
-    MatDialogRef,
     MatIconModule,
-    ReactiveFormsModule,
-    MatListModule,
+    MatDialogModule,
     MatCardModule
   ],
   providers: [
     LoginService,
     UserService,
-    BookService,
-    MessageService
+    BookService
   ],
-  entryComponents: [DialogUserComponent],
+  entryComponents: [ChatDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
