@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {AppConst} from '../../constants/app-const';
 import {LoginService} from '../../services/login/login.service';
 import {UserService} from '../../services/user/user.service';
-import {getMatIconFailedToSanitizeLiteralError} from '@angular/material';
 
 @Component({
   selector: 'app-account',
