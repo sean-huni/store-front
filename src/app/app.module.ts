@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -22,12 +22,15 @@ import {UserService} from './services/user/user.service';
 import {LoginService} from './services/login/login.service';
 import {BookService} from './services/book/book.service';
 
-import { HomeComponent } from './components/home/home.component';
-import { NavBarComponent } from './components/nav/top-bar/nav-bar.component';
-import { AccountComponent } from './components/account/account.component';
-import { FooterComponent } from './components/nav/footer/footer.component';
-import { ChatComponent } from './components/live/chat/chat.component';
-import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.component';
+import {HomeComponent} from './components/home/home.component';
+import {NavBarComponent} from './components/nav/top-bar/nav-bar.component';
+import {AccountComponent} from './components/account/account.component';
+import {FooterComponent} from './components/nav/footer/footer.component';
+import {ChatComponent} from './components/live/chat/chat.component';
+import {ChatDialogComponent} from './components/live/chat-dialog/chat-dialog.component';
+
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
+import {rxStompConfig} from './services/socket/rx-stomp.config';
 
 
 @NgModule({
@@ -61,9 +64,20 @@ import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.c
   providers: [
     LoginService,
     UserService,
-    BookService
+    BookService,
+    {
+      provide: InjectableRxStompConfig,
+      useValue: rxStompConfig
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig]
+    }
   ],
   entryComponents: [ChatDialogComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+}

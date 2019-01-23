@@ -1,12 +1,17 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Action} from '../../../enums/action';
 import {Event} from '../../../enums/event';
 import {Message} from '../../../model/int/Message';
+import {Message as iMsg} from '@stomp/stompjs';
 import {MatDialog, MatDialogRef, MatList, MatListItem} from '@angular/material';
 import {DialogUserType} from '../../../enums/dialog-user-type';
 import {ChatDialogComponent} from '../chat-dialog/chat-dialog.component';
 import {SocketService} from '../../../services/socket/socket.service';
 import {UserInt} from '../../../model/int/user-int';
+import {error} from '@angular/compiler/src/util';
+import {Subscription} from 'rxjs';
+import {subscribeOn} from 'rxjs/operators';
+import {subscribeToResult} from 'rxjs/internal-compatibility';
 
 
 const AVATAR_URL = 'https://api.adorable.io/avatars/285';
@@ -16,12 +21,12 @@ const AVATAR_URL = 'https://api.adorable.io/avatars/285';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, AfterViewInit {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   action = Action;
   user: UserInt;
   messages: Message[] = [];
   messageContent: string;
-  ioConnection: any;
+  ioSubscription: Subscription;
   dialogRef: MatDialogRef<ChatDialogComponent> | null;
   defaultDialogUserParams: any = {
     disableClose: true,
@@ -57,6 +62,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngOnDestroy() {
+    this.ioSubscription.unsubscribe();
+  }
+
   // auto-scroll fix: inspired by this stack overflow post
   // https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style
   private scrollToBottom(): void {
@@ -76,26 +85,29 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   private initIoConnection(): void {
     this.socketService.initSocket();
-    setTimeout(() => {
-      console.log('isConnected-1: ', this.socketService.isConnected);
-      this.waitedConnection();
-    }, 1500);
 
+    this.waitedConnection();
+    console.log('isConnected-1: ', this.socketService.isConnected);
   }
 
   private waitedConnection(): void {
     console.log('isConnected-2: ', this.socketService.isConnected);
     if (this.socketService.isConnected) {
       console.log('Executed...');
-      this.ioConnection = this.socketService.onMessage()
-        .subscribe((message: Message) => {
-          console.log('Pushed Message: ', message);
-          message = JSON.parse((message).toString().split(/\r?\n/).pop());
-          console.log('Extracted Message: ', message);
-          // console.log('Parsed Message: ', JSON.parse(message).from);
-          this.messages.push(Object.assign({}, message));
-          console.log('All Messages: ', this.messages);
-        });
+
+      this.ioSubscription = this.socketService.onMessage(this.messages).subscribe(
+        resp => {
+          console.log('data: ', resp);
+        },  error1 => console.error(error1));
+
+      if (!this.ioSubscription.closed) {
+        // console.log('Pushed Message: ', message);
+        // message = JSON.parse((message).toString().split(/\r?\n/).pop());
+        // console.log('Extracted Message: ', message);
+        // console.log('Parsed Message: ', JSON.parse(message).from);
+        // this.messages.push(Object.assign({}, message));
+        console.log('All Messages: ', this.messages);
+      }
 
       this.socketService.onEvent(Event.CONNECT)
         .subscribe(() => {
@@ -133,13 +145,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
       this.user.name = paramsDialog.username;
       if (paramsDialog.dialogType === DialogUserType.NEW) {
         this.initIoConnection();
-        setTimeout(() => {
-          this.sendNotification(paramsDialog, Action.JOINED);
-        }, 2000);
+        this.sendNotification(paramsDialog, Action.JOINED);
       } else if (paramsDialog.dialogType === DialogUserType.EDIT) {
-        setTimeout(() => {
-          this.sendNotification(paramsDialog, Action.RENAME);
-        }, 2000);
+        this.sendNotification(paramsDialog, Action.RENAME);
       }
     });
   }
@@ -152,10 +160,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.socketService.send({
+    const data = {
       from: this.user,
       content: message
-    });
+    };
+
+    this.socketService.send(data);
     this.messageContent = null;
   }
 
