@@ -75,15 +75,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   private initIoConnection(): void {
-    this.socketService.initSocket();
     setTimeout(() => {
+      this.socketService.initSocket(this);
       console.log('isConnected-1: ', this.socketService.isConnected);
-      this.waitedConnection();
-    }, 1500);
-
+    }, 1);
   }
 
-  private waitedConnection(): void {
+  waitedConnection(): void {
     console.log('isConnected-2: ', this.socketService.isConnected);
     if (this.socketService.isConnected) {
       console.log('Executed...');
@@ -135,11 +133,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
         this.initIoConnection();
         setTimeout(() => {
           this.sendNotification(paramsDialog, Action.JOINED);
-        }, 2000);
+        }, 1000);
       } else if (paramsDialog.dialogType === DialogUserType.EDIT) {
         setTimeout(() => {
           this.sendNotification(paramsDialog, Action.RENAME);
-        }, 2000);
+        }, 1000);
       }
     });
   }
@@ -169,6 +167,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
       };
     } else if (action === Action.RENAME) {
       message = {
+        from: this.user,
         action: action,
         content: {
           username: this.user.name,
@@ -180,4 +179,38 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.socketService.send(message);
   }
 
+  private instanceofString(obj: any): boolean {
+    console.log('Content: ', obj);
+    if (obj === undefined || obj === null) {
+      return false;
+    }
+
+    const val = Object.getPrototypeOf(obj) === String.prototype;
+    console.log('instanceOfString: ', val);
+    return val;
+  }
+
+  private enumEquals(e1: Action, e2: Action): boolean {
+    console.log('Content: ', e1);
+
+    if (e1 !== undefined && e1 !== null && Object.getPrototypeOf(e1) === String.prototype) {
+      switch (e1.toString()) {
+        case 'JOINED':
+          e1 = 0;
+          break;
+        case 'LEFT':
+          e1 = 1;
+          break;
+        case 'RENAME':
+          e1 = 2;
+          break;
+        default:
+          return undefined;
+      }
+    }
+
+    const val = e1 === e2;
+    console.log(e1 + ' Equals ' + e2 + ': ', val);
+    return val;
+  }
 }

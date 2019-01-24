@@ -11,13 +11,13 @@
           <h4 mat-line *ngIf="message.action !== undefined">
             <b>{{message.from.name}}</b>
           </h4>
-          <p mat-line *ngIf="message.action !== undefined">
+          <p mat-line *ngIf="message.action !== undefined && instanceofString(message.content)">
             <span> {{message.content}} </span>
           </p>
-          <p mat-line *ngIf="message.action === action.JOINED" class="chat-notification">
+          <p mat-line *ngIf="enumEquals(message.action, action.JOINED)" class="chat-notification">
             <span> <b>{{message.from.name}}</b> joined to the conversation. </span>
           </p>
-          <p mat-line *ngIf="message.action === action.RENAME" class="chat-notification">
+          <p mat-line *ngIf="enumEquals(message.action, action.RENAME)" class="chat-notification">
             <span> <b>{{message.content.previousUsername}}</b> is now <b>{{message.content.username}}</b> </span>
           </p>
         </mat-list-item>

@@ -6,8 +6,7 @@ import {AppConst} from '../../constants/app-const';
 import {Observable} from 'rxjs';
 import {Message} from '../../model/int/Message';
 import {Event} from '../../enums/event';
-import {error} from '@angular/compiler/src/util';
-import {resolve} from 'q';
+import {ChatComponent} from '../../components/live/chat/chat.component';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class SocketService {
   constructor() {
   }
 
-  public initSocket(): void {
+  public initSocket(p: ChatComponent): void {
     this.socket = SockJS(this.SERVER_URL + this.STOMP_ENDPOINT);
     this.stompClient = Stomp.over(this.socket);
     const _this = this;
@@ -32,9 +31,8 @@ export class SocketService {
         console.log('Connection Frame-Data: ' + frame);
 
         // Subscribe...
-      }
-    );
-
+      p.waitedConnection();
+      });
   }
 
   public send(message: Message): void {
