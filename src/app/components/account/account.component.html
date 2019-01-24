@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8">
+      <h2 class="section-headline"><span>My Account</span></h2>
+    </div>
+    <div class="col-xs-4">
+      <img src="" class="image1" alt="Image Placeholder"/>
+    </div>
+    <img src="" class="image2" />
+  </div>
+  <hr class="diver-hr">
+  <div class="row row-div">
+    <div class="col-xs-3"></div>
+    <div class="col-xs-9">
+      <div class="card-group">
+        <div class="card" style="border:none;">
+          <div class="card-body card-body-item-1">
+            <mat-tab-group>
+
+              <!--Login Tab-->
+              <mat-tab label="Login">
+                <div class="login-section">
+                  <div *ngIf="loginError" class="error">
+                    Incorrect username or password.
+                  </div>
+                  <form (ngSubmit)="exeLogin()">
+                    <div class="form-group">
+                      <label for ="username" class="mat-tab-label-text">Username *</label>
+                      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.username" required="required" autofocus="autofocus">
+                      <p class="faze-input">Enter username</p>
+                    </div>
+                    <div class="form-group">
+                      <label for ="password" class="mat-tab-label-text">Password *</label>
+                      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" required="required" autofocus="autofocus">
+                      <p class="faze-input">Enter password</p>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Log In</button>
+                  </form>
+                </div>
+              </mat-tab>
+              <!--Forgot Password Tab-->
+
+              <!--New Account Tab-->
+              <mat-tab label="New Account">
+                <div class="login-section">
+                  <div class="alert alert-info" *ngIf="emailSent">
+                    An email has just been sent to your email account.
+                    Please follow the rest of the instructions from
+                    your email message.
+                  </div>
+                  <form (ngSubmit)="exeNewAccount()">
+                    <div class="form-group">
+                      <label for="newUsername" class="mat-tab-label-text">Username *</label>
+                      &nbsp;
+                      <span *ngIf="usernameExists" style="color: red;">
+                        Username already exists. Please choose a different username.
+                      </span>
+                      <input type="text" class="form-control" id="newUsername" name="username" [(ngModel)]="username" required="required" autofocus="autofocus">
+                      <p class="faze-input">Enter username</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="newUsername" class="mat-tab-label-text">Email Address *</label>
+                      &nbsp;
+                      <span *ngIf="emailExist" style="color: red;">
+                        Email already exists. Please use the <strong>Forgot Password</strong> feature.
+                      </span>
+                      <input type="text" class="form-control" id="newEmail" name="email" [(ngModel)]="email" required="required" autofocus="autofocus">
+                      <p class="faze-input">Enter email address</p>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Create new account</button>
+                  </form>
+                </div>
+              </mat-tab>
+
+              <!--Forgot-Password Tab-->
+              <mat-tab label="Forgot Password">
+                <div class="login-section">
+                  <div class="alert alert-info" *ngIf="emailNotExist">
+                    Email doesn't exist.
+                  </div>
+                  <div class="alert alert-success" *ngIf="forgotPasswordEmailSent">Email Sent.</div>
+                  <form (ngSubmit)="forgotPassword()">
+                    <div class="form-group">
+                      <label for="recoveryEmail" class="mat-tab-label-text">Email Address *</label>
+                      <input type="text" class="form-control" id="recoveryEmail" name="recoveryEmail" [(ngModel)]="email" required="required" autofocus="autofocus">
+                      <p class="faze-input">Enter email address</p>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Reset Password</button>
+                  </form>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
