@@ -28,6 +28,7 @@ import { AccountComponent } from './components/account/account.component';
 import { FooterComponent } from './components/nav/footer/footer.component';
 import { ChatComponent } from './components/live/chat/chat.component';
 import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.component';
+import { TopBannerComponent } from './components/nav/top-banner/top-banner.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.c
     AccountComponent,
     FooterComponent,
     ChatComponent,
-    ChatDialogComponent
+    ChatDialogComponent,
+    TopBannerComponent
   ],
   imports: [
     BrowserModule,
