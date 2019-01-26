@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -22,23 +22,27 @@ import {UserService} from './services/user/user.service';
 import {LoginService} from './services/login/login.service';
 import {BookService} from './services/book/book.service';
 
-import { HomeComponent } from './components/home/home.component';
-import { NavBarComponent } from './components/nav/top-bar/nav-bar.component';
-import { AccountComponent } from './components/account/account.component';
-import { FooterComponent } from './components/nav/footer/footer.component';
-import { ChatComponent } from './components/live/chat/chat.component';
-import { ChatDialogComponent } from './components/live/chat-dialog/chat-dialog.component';
+import {HomeComponent} from './components/home/home.component';
+import {ComboBoxPipe} from './components/nav/top-bar/combo-box.pipe';
+import {NavBarComponent} from './components/nav/top-bar/nav-bar.component';
+import {AccountComponent} from './components/account/account.component';
+import {FooterComponent} from './components/nav/footer/footer.component';
+import {ChatComponent} from './components/live/chat/chat.component';
+import {ChatDialogComponent} from './components/live/chat-dialog/chat-dialog.component';
+import {TopBannerComponent} from './components/nav/top-banner/top-banner.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ComboBoxPipe,
     NavBarComponent,
     AccountComponent,
     FooterComponent,
     ChatComponent,
-    ChatDialogComponent
+    ChatDialogComponent,
+    TopBannerComponent
   ],
   imports: [
     BrowserModule,

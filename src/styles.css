@@ -2,7 +2,9 @@
 @import "~@angular/material/prebuilt-themes/purple-green.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/font-awesome-animation/dist/font-awesome-animation.min.css";
 @import "non_responsive.css";
+
 
 hr {
   border: none;

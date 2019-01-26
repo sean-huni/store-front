@@ -1,3 +1,63 @@
 .btn-spacer {
   margin-left: 40px;
 }
+
+.input-control {
+  width: 165px;
+  border: 0;
+}
+
+.data-container {
+  width: 210px;
+  background: white;
+  /*border-left: 1px solid black;*/
+  /*border-bottom: 1px solid black;*/
+  /*border-right: 1px solid black;*/
+  display: block;
+  position: absolute;
+  border: 1px solid grey;
+  height: 140px;
+  max-height: 180px;
+  overflow-y: scroll;
+  top: -1px;
+  z-index: 2;
+  margin-left: -10px;
+  margin-top: 40px;
+}
+
+.data-list {
+  cursor: pointer;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  color: #231F20;
+}
+
+/* When using the .p element.*/
+/*div p:hover{*/
+/*background: #3d3fff;*/
+/*}*/
+
+.li-btn-fixes {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+}
+
+
+.no-list-style li:hover {
+  background: #3d3fff;
+}
+
+.drop-down {
+  border: 1px solid grey;
+  width: 196px;
+}
+
+.highlight {
+  background: #3d3fff;
+}
+
+.no-list-style {
+  list-style-type: none;
+  padding-left: 0;
+}
