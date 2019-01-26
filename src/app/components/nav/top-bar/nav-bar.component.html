@@ -11,11 +11,32 @@
       <ul class="nav navbar navbar-nav mr-auto ">
         <li><a mat-button routerLink="/chat">Lets Chat</a></li>
         <li><a mat-button routerLink="/viewBooks">All Books</a></li>
-        <form (ngSubmit)="searchBookByTitle()" class="navbar-form">
+        <form (ngSubmit)="searchBookByTitle()" class="navbar-form dropdown">
           <div class="form-group btn-spacer">
-            <input type="text" id="title" name="title" [(ngModel)]="titleKeyword" class="form-control" placeholder="Book Title">
+            <div class="input-group">
+              <div class="row">
+                <input type="text" id="title" name="title" [(ngModel)]="titleKeyword" class="form-control"
+                       (click)="onClick()"
+                       (ngModelChange)="textChange($event)"
+                       (keyup)="onKeyDownAction($event)"
+                       (focus)="onFocusEventAction()"
+                       placeholder="Book Search" autocomplete="off"/>
+                <div class="input-group-append">
+                  <span class="input-group-text btn btn-outline-info" (click)="onBlurEventAction()">
+                    <i [ngClass]="showDropDown ? 'fa fa-caret-up' : 'fa fa-caret-down'"></i>
+                  </span>
+                </div>
+              </div>
+              <ul class="data-container no-list-style" *ngIf="showDropDown">
+                <li *ngFor="let data of dispList; let i = index" type="button" (click)="updateTextBox(data)"
+                    class="data-list btn btn-outline-light li-btn-fixes btn-block"
+                    [ngClass]="{highlight:checkHighlight(i)}">
+                  {{data[columnName2]}}: {{data[columnName]}}
+                </li>
+              </ul>
+            </div>
           </div>
-          <button type="submit" class="btn btn-info btn-spacer">Search</button>
+          <button type="submit" class="btn btn-info btn-spacer">Search <i class="fa fa-angle-down"></i></button>
         </form>
       </ul>
       <ul class="nav navbar navbar-nav ml-auto">

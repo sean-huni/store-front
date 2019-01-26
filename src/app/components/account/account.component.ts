@@ -29,14 +29,15 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.checkSession().subscribe(
-      resp => {
-        console.log(resp);
-        this.loggedIn = true;
-      }, error => {
-        console.log(error);
-        this.loggedIn = false;
-      });
+    // ToDo: Restore the code.
+    // this.loginService.checkSession().subscribe(
+    //   resp => {
+    //     console.log(resp);
+    //     this.loggedIn = true;
+    //   }, error => {
+    //     console.log(error);
+    //     this.loggedIn = false;
+    //   });
   }
 
   exeLogin() {
